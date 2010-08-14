@@ -1,6 +1,5 @@
 from google.appengine.ext import db
 
-
 class ChartDataSet(db.Model):
     version = db.IntegerProperty(required=True)
     previous_version = db.SelfReferenceProperty()
