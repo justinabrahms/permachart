@@ -1,3 +1,4 @@
+import urllib
 from urlparse import urlunparse
 
 _cht = dict({

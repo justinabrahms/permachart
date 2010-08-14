@@ -3,7 +3,7 @@
 {% if chart_list %}
 <ul>
   {% for chart in chart_list %}
-  <li><a href="{% url chart-detail chart.hash %}">{{ chart }}</a></li>
+  <li><a href="{% url chart-detail chart.key %}">{{ chart }}</a></li>
   {% endfor %}
 </ul>
 {% else %}

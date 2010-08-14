@@ -24,19 +24,19 @@ def manual_data_import(request):
         cf = ChartForm(request.POST)
         if cf.is_valid():
             chart = cf.save()
-            return HttpResponseRedirect(reverse('chart-detail', args=(chart.hash,)))
+        return HttpResponseRedirect(reverse('chart-detail', args=(str(chart.key),)))
     else:
         cf = ChartForm()
     return render_to_response('charter/data_input.html', {'f':cf})
 
-def data_edit(request, hash):
-    chart = Chart.get()
+def data_edit(request, key):
+    chart = db.get(key)
 
 def bulk_data_import(request):
     pass
 
-def chart_detail(request, hash):
-    chart = get_object_or_404(Chart, hash=hash)
+def chart_detail(request, key):
+    chart = db.get(key)
     graph = get_graph_url(chart.data, _cht[chart.chart_type])
     return render_to_response('charter/detail.html', {'chart':chart, 'graph': graph})
 
