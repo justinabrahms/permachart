@@ -8,5 +8,6 @@ urlpatterns = patterns(
     url('^new/$', charter_views.manual_data_import, name="chart-new"),
     url('^list/$', charter_views.chart_list, name="chart-list"),
     url('^tmp-data/$', charter_views.pop_data),
+    url('^(.*)/edit/$', charter_views.data_edit, name="chart-data-edit"),
     url('^(.*)/$', charter_views.chart_detail, name="chart-detail"),
 )
