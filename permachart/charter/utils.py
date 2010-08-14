@@ -9,7 +9,11 @@ ALPHABET="23456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
 _cht = dict({
     'pie': 'p3',
     'pie2d': 'p',
+    'bar': 'bvg',
 })
+
+WIDTH = 600
+HEIGHT = 480
 
 def get_graph_url(dataset,cht='p3'):
     data = dict({})
@@ -22,11 +26,13 @@ def get_graph_url(dataset,cht='p3'):
         chl.append(row.data_key)
         chd.append(float(row.data_value))
     if cht == 'p3':
-        G = pygooglechart.PieChart3D(600,480)
+        G = pygooglechart.PieChart3D(WIDTH,HEIGHT)
         G.set_pie_labels(chl)
     if cht == 'p':
-        G = pygooglechart.PieChart2D(600,480)
+        G = pygooglechart.PieChart2D(WIDTH,HEIGHT)
         G.set_pie_labels(chl)
+    if cht == 'bvg':
+        G = pygooglechart.GroupedVerticalBarChart(WIDTH,HEIGHT)
     G.add_data(chd)
     return G.get_url(), G
 
