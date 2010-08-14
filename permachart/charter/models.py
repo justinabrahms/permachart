@@ -1,6 +1,8 @@
 import hashlib
 from google.appengine.ext import db
 
+CHART_CHOICES = ('pie','bar','line',)
+
 class ChartDataSet(db.Model):
     version = db.IntegerProperty(required=True)
     previous_version = db.SelfReferenceProperty()
@@ -13,7 +15,7 @@ class DataRow(db.Model):
 class Chart(db.Model):
     name = db.StringProperty(required=True)
     hash = db.StringProperty()
-    chart_type = db.StringProperty(required=True)
+    chart_type = db.StringProperty(required=True, choices=CHART_CHOICES)
     user = db.UserProperty()
     data = db.ReferenceProperty(ChartDataSet)
 
