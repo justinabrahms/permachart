@@ -43,5 +43,6 @@ MIDDLEWARE_CLASSES = (
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sites',
+    'charter',
 )
 TEMPLATE_DIRS = os.path.join(PROJECT_ROOT, 'templates')
