@@ -6,6 +6,7 @@ from google.appengine.api import users
 
 from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm
+from charter.utils import _cht, get_graph_url
 
 
 def get_object_or_404(cls, **kwargs):
@@ -36,7 +37,8 @@ def bulk_data_import(request):
 
 def chart_detail(request, hash):
     chart = get_object_or_404(Chart, hash=hash)
-    return render_to_response('charter/detail.html', {'chart':chart})
+    graph = get_graph_url(chart.data, _cht[chart.chart_type])
+    return render_to_response('charter/detail.html', {'chart':chart, 'graph': graph})
 
 def chart_list(request):
     chart_list = Chart.all()
