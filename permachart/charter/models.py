@@ -24,4 +24,3 @@ class Chart(db.Model):
         # FIXME: Bad hashing key.
         self.hash = hashlib.md5.hash(name).hexdigest()
         super(Chart, self).save(*args, **kwargs)
-    
