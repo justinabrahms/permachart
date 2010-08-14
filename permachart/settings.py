@@ -27,7 +27,7 @@ SITE_ID = 1
 USE_I18N = False
 USE_L10N = False
 MEDIA_ROOT = ''
-MEDIA_URL = ''
+MEDIA_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/media/'
 SECRET_KEY = '5343xe*^^nc69qa%khwav1)dq^&s2bfa#oc_hm2p#zl$z-x+l*'
 ROOT_URLCONF = 'permachart.urls'
@@ -38,7 +38,7 @@ TEMPLATE_LOADERS = (
 )
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # FIXME: add csrf protection
 )
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
