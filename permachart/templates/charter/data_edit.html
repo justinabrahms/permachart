@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="POST">
+  <table>
+    {{ f.as_table }}
+    <tr>
+      <td><input type="submit" /></td>
+    </tr>
+  </table>
+</form>
+{% endblock %}
