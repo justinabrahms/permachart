@@ -6,6 +6,7 @@ from google.appengine.api import users
 
 from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm
+from charter.utils import get_graph_url
 
 def signin(request):
     # likely handled by appengine, but might require a callback?
@@ -29,7 +30,8 @@ def chart_detail(request, hash):
         chart = Chart.get(hash=hash)
     except:
         raise Http404
-    return render_to_response('charter/detail.html', {'chart':chart})
+    graph = get_graph_url(chart.data)
+    return render_to_response('charter/detail.html', {'chart':chart, 'graph': graph})
 
 def chart_list(request):
     chart_list = Chart.all()
