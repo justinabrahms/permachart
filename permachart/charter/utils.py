@@ -1,5 +1,9 @@
 from urlparse import urlunparse
 
+_cht = dict({
+    'pie': 'p',
+})
+
 def get_graph_url(dataset,cht='p3'):
     api = "http://chart.apis.google.com/chart?"
     data = dict()
