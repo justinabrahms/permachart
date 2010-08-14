@@ -3,12 +3,20 @@ import os
 PROJECT_ROOT = os.path.dirname(__file__)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
 ADMINS = (
     ('Justin Lilly', 'justin+permachart@justinlilly.com'),
 )
-
 MANAGERS = ADMINS
+TIME_ZONE = 'America/New_York'
+LANGUAGE_CODE = 'en-us'
+SITE_ID = 1
+USE_I18N = False
+USE_L10N = False
+MEDIA_ROOT = ''
+MEDIA_URL = '/static/'
+ADMIN_MEDIA_PREFIX = '/media/'
+SECRET_KEY = '5343xe*^^nc69qa%khwav1)dq^&s2bfa#oc_hm2p#zl$z-x+l*'
+ROOT_URLCONF = 'permachart.urls'
 
 DATABASES = {
     'default': {
@@ -21,16 +29,6 @@ DATABASES = {
     }
 }
 
-TIME_ZONE = 'America/New_York'
-LANGUAGE_CODE = 'en-us'
-SITE_ID = 1
-USE_I18N = False
-USE_L10N = False
-MEDIA_ROOT = ''
-MEDIA_URL = '/static/'
-ADMIN_MEDIA_PREFIX = '/media/'
-SECRET_KEY = '5343xe*^^nc69qa%khwav1)dq^&s2bfa#oc_hm2p#zl$z-x+l*'
-ROOT_URLCONF = 'permachart.urls'
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
