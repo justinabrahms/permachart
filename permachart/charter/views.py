@@ -1,12 +1,16 @@
+from django.shortcuts import render_to_response
+from charter.models import Chart# , ChartDataSet, DataRow
 
 def home(request):
-    pass
+    return render_to_response('home.html')
 
 def signin(request):
     # likely handled by appengine, but might require a callback?
     pass
 
 def manual_data_import(request):
+    if request.method == "POST":
+        pass
     pass
 
 def bulk_data_import(request):

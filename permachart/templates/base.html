@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>PermaChart</title>
+    {% block js %}{% endblock %}
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="/static/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/static/text.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/static/base.css" type="text/css" media="screen" />
+  </head>
+  <body>
+    <div id="header">
+      <ul id="nav" class="clearfix">
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url new-chart %}">Create New Chart</a></li>
+        {% if anonymous %}
+        <li><a href="/login">Login</a></li>
+        {% else %}
+        <li><a href="/logout">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    <div id="content">
+      {% block content %}{% endblock %}
+      <div id="footer">
+        <hr />
+        <p>
+          Created by <a href="http://justinlilly.com/">Justin Lilly</a>.
+        </p>
+      </div>
+    </div>
+    {% include "analytics.html" %}
+  </body>
+</html>
