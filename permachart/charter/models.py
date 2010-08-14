@@ -1,3 +1,4 @@
+import hashlib
 from google.appengine.ext import db
 
 class ChartDataSet(db.Model):
@@ -11,9 +12,16 @@ class DataRow(db.Model):
 
 class Chart(db.Model):
     name = db.StringProperty(required=True)
+    hash = db.StringProperty()
     chart_type = db.StringProperty(required=True)
     user = db.UserProperty()
     data = db.ReferenceProperty(ChartDataSet)
 
     def __unicode__(self):
         return "%s - %s" % (self.name, self.chart_type)
+
+    def save(self, *args, **kwargs):
+        # FIXME: Bad hashing key.
+        self.hash = hashlib.md5.hash(name).hexdigest()
+        super(Chart, self).save(*args, **kwargs)
+    
