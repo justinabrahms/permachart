@@ -37,8 +37,12 @@ def bulk_data_import(request):
 
 def chart_detail(request, key):
     chart = db.get(key)
-    graph = get_graph_url(chart.data, _cht[chart.chart_type])
-    return render_to_response('charter/detail.html', {'chart':chart, 'graph': graph})
+    graph_url, graph = get_graph_url(chart.data, _cht[chart.chart_type])
+    return render_to_response('charter/detail.html', {
+        'chart':chart, 
+        'graph': graph,
+        'graph_url': graph_url
+    })
 
 def chart_list(request):
     chart_list = Chart.all()
