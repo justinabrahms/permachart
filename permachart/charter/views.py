@@ -7,9 +7,6 @@ from google.appengine.api import users
 from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm
 
-def home(request):
-    return render_to_response('home.html')
-
 def signin(request):
     # likely handled by appengine, but might require a callback?
     pass
