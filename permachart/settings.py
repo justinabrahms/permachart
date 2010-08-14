@@ -39,11 +39,9 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
 )
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sites',
-    'django.contrib.messages',
 )
 TEMPLATE_DIRS = os.path.join(PROJECT_ROOT, 'templates')
