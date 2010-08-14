@@ -11,6 +11,7 @@ v0.1
 * versioned data stores
 
 v0.2
+
 * stats for a given url
 
 v0.3
