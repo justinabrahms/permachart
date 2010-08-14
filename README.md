@@ -7,13 +7,16 @@ rougly a bit.ly for charts.
 v0.1
 
 * bulk imput of data
-* stats for a given url
+* get chart at opaque url
 * versioned data stores
 
 v0.2
+* stats for a given url
+
+v0.3
 
 * API
 
-v0.3
+v0.4
 
 * Google Docs Spreadsheet integration
