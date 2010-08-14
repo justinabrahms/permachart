@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath(BASE_PATH))
 for path, dirs, files in os.walk(os.path.join(BASE_PATH, 'deps')):
     for dir in dirs:
         sys.path.insert(0, os.path.join(path, dir))
-sys.path.insert(0, os.path.join(BASE_PATH, 'permachart')
+sys.path.insert(0, os.path.join(BASE_PATH, 'permachart'))
 
 # Must set this env var *before* importing any part of Django
 os.environ['DJANGO_SETTINGS_MODULE'] = 'permachart.settings'
