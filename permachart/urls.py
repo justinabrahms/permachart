@@ -7,5 +7,6 @@ urlpatterns = patterns(
     url('^$', direct_to_template, {'template': 'home.html'}, name="home"),
     url('^new/$', charter_views.manual_data_import, name="chart-new"),
     url('^list/$', charter_views.chart_list, name="chart-list"),
+    url('^tmp-data/$', charter_views.pop_data),
     url('^(.*)/$', charter_views.chart_detail, name="chart-detail"),
 )

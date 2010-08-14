@@ -22,7 +22,10 @@ class Chart(db.Model):
     def __unicode__(self):
         return "%s - %s" % (self.name, self.chart_type)
 
+    def get_hash(self):
+        # FIXME: Bad hashing key/method.
+        return hashlib.md5(self.name).hexdigest()
+
     def put(self, *args, **kwargs):
-        # FIXME: Bad hashing key.
-        self.hash = hashlib.md5(self.name).hexdigest()
+        self.hash = self.get_hash()
         super(Chart, self).put(*args, **kwargs)
