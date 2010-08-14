@@ -1,9 +1,5 @@
 import logging, os, sys
 
-# unfuck pdb
-for attr in ('stdin', 'stdout', 'stderr'):
-    setattr(sys, attr, getattr(sys, '__%s__' % attr))
-
 # Google App Engine imports.
 from google.appengine.ext.webapp import util
 
