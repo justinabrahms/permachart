@@ -65,4 +65,3 @@ def pretty_decode(string, alphabet=ALPHABET):
         idx += 1
 
     return num
->>>>>>> 48289d9ad8831515ea3aa7d5fe739745535a7a4d
