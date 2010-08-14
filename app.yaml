@@ -4,6 +4,9 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /favicon.ico
+  static_files: permachart/static/favicon.ico       
+  upload: permachart/static/favicon.ico
 - url: /static
   static_dir: permachart/static
 - url: /.*
