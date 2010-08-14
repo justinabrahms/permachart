@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>{{ MEDIA_URL }}</h3>
+<form method="POST">
+  <table>
+    {{ f.as_table }}
+    <tr>
+      <td><input type="submit" /></td>
+    </tr>
+  </table>
+</form>
+<h3>untest</h3>
+{% endblock %}
