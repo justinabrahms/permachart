@@ -27,14 +27,20 @@ def get_graph(dataset,cht='p3',width=WIDTH,height=HEIGHT, y_steps=Y_STEPS):
         row = db.get(data_item)
         chl.append(row.data_key)
         chd.append(float(row.data_value))
-    maxim = -1
-    minim = 5000
+    maxim = -1 * 10 ^ 10
+    minim = 10 ^ 10
     for ch in chd:
         if ch > maxim:
             maxim = int(ch)
         if ch < minim:
             minim = int(ch)
             
+    offset = (maxim-minim) * .15
+    if minim >= 0 and (minim - offset) < 0:
+        minim = 0
+    else:
+        minim -= offset
+    maxim += offset
     yrange = (minim, maxim)
     y_step = (yrange[1] - yrange[0]) / y_steps
     y_axis = []

@@ -8,7 +8,7 @@ from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm, DataSetForm, DataRowForm, DataRowFormSet
 from charter.utils import _cht, get_graph
 from urlparse import urlparse
-from json import dumps
+from django.utils import simplejson as json
 
 def get_object_or_404(cls, **kwargs):
     try:
@@ -120,7 +120,7 @@ def oembed(request):
         "provider_name": "Permachart",
         "provier_url": "http://permachart.appengine.com"
     }
-    return HttpResponse(dumps(oembed))
+    return HttpResponse(json.dumps(oembed))
 
 def pop_data(request):
     import time, random
