@@ -7,7 +7,8 @@ from google.appengine.api import users
 from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm, DataSetForm, DataRowForm, DataRowFormSet
 from charter.utils import _cht, get_graph, pretty_decode
-from urlparse import urlparse
+from urllib import urlencode, quote
+from urlparse import urlparse, urlunparse, parse_qs
 from django.utils import simplejson as json
 
 def get_object_or_404(cls, **kwargs):
@@ -110,6 +111,10 @@ def oembed(request):
         version = chart.data
         perma = reverse('chart-detail', args=(pretty_decode(keys[1]),))
     graph_url, graph = get_graph(version, _cht[chart.chart_type], 600, 480)
+    graph_parts = urlparse(graph_url)
+    graph_qs = parse_qs(graph_parts.query)
+    new_qs = '&'.join([k+'='+quote(str(v)) for (k,v) in graph_qs.items()])
+    graph_url = urlunparse((graph_parts.scheme, graph_parts.netloc, graph_parts.path, graph_parts.params, new_qs, graph_parts.fragment))
     oembed = {
         "version": str(version.version),
         "type": "photo",
@@ -120,7 +125,7 @@ def oembed(request):
         "provider_name": "Permachart",
         "provier_url": "http://permachart.appengine.com"
     }
-    return HttpResponse(json.dumps(oembed))
+    return HttpResponse(json.dumps(oembed, sort_keys=True, indent=4), mimetype='application/javascript')
 
 def pop_data(request):
     import time, random

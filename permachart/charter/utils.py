@@ -45,7 +45,8 @@ def get_graph(dataset,cht='p3',width=WIDTH,height=HEIGHT, y_steps=Y_STEPS):
     y_step = (yrange[1] - yrange[0]) / y_steps
     y_axis = []
     for x in range(y_steps):
-        y_axis.append((x * y_step) + yrange[0])
+        number = (x * y_step) + yrange[0]
+        y_axis.append("%.1f" % number)
     y_axis.append(yrange[1])
 
     if cht == 'p':
