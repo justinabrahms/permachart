@@ -22,9 +22,7 @@ class DataRowForm(djangoforms.ModelForm):
     class Meta:
         model = DataRow
 
-class DataRowFormSet(object):
-    base_form = DataRowForm
-
+class BaseFormSet(object):
     def __init__(self, data=None, instances=None, extra_forms=2):
         """
         Testing Concerns:
@@ -67,11 +65,14 @@ class DataRowFormSet(object):
         that we can skip (otherwise, it wouldn't have passed
         validation).
         """
-        for i, dr in enumerate(self.forms):
-            if not dr.is_valid():
-                if not dr.has_changed() and \
-                        hasattr(dr, 'empty_ok') and\
-                        dr.empty_ok == True:
+        for i, sub_form in enumerate(self.forms):
+            if not sub_form.is_valid():
+                if not sub_form.has_changed() and \
+                        hasattr(sub_form, 'empty_ok') and\
+                        sub_form.empty_ok == True:
                     continue
                 return False
         return True
+
+class DataRowFormSet(BaseFormSet):
+    base_form = DataRowForm
