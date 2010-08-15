@@ -12,6 +12,7 @@ v0.1
 
 v0.2
 
+* auth
 * stats for a given url
 
 v0.3
