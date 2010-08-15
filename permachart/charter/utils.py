@@ -1,6 +1,5 @@
 from google.appengine.ext import db
 import pygooglechart
-
 from urllib import quote
 from urlparse import urlunparse
 
