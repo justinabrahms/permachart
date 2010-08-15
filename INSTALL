@@ -1,0 +1,19 @@
+First, Install the App engine SDK
+    
+    http://code.google.com/appengine/downloads.html#Google_App_Engine_SDK_for_Python
+    
+        Mac: Download the DMG, put the sdk into "Applications" and run it
+    
+Download Source
+---------------
+
+git clone http://github.com/justinlilly/permachart.git
+
+
+Mac
+-----
+
+Open GoogleAppEngineLauncher
+    Add app.yaml to SDK
+    Run App
+    Click "Browse"
