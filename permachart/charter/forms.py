@@ -25,7 +25,7 @@ class DataRowForm(djangoforms.ModelForm):
 class DataRowFormSet(object):
     base_form = DataRowForm
 
-    def __init__(self, data=None, instances=None):
+    def __init__(self, data=None, instances=None, extra_forms=2):
         """
         Testing Concerns:
          - deleting an item
@@ -34,6 +34,7 @@ class DataRowFormSet(object):
          - altering the value
         """
         self.forms = []
+        instances = instances or []
         for i, obj in enumerate(instances):
             if isinstance(obj, db.Key):
                 # fetch keys for validation
@@ -55,6 +56,13 @@ class DataRowFormSet(object):
                         prefix="%i" % i,
                     )
                 )
+        offset = len(instances)
+        for i in range(extra_forms):
+            self.forms.append(
+                self.base_form(
+                    prefix="%i" % (offset+i),
+                )
+            )
     
     def is_valid(self):
         for dr in self.forms:
