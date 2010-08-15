@@ -6,7 +6,7 @@ from google.appengine.api import users
 
 from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm, DataSetForm, DataRowForm, DataRowFormSet
-from charter.utils import _cht, get_graph
+from charter.utils import _cht, get_graph, pretty_decode
 from urlparse import urlparse
 from django.utils import simplejson as json
 
@@ -25,13 +25,13 @@ def manual_data_import(request):
         cf = ChartForm(request.POST)
         if cf.is_valid():
             chart = cf.save()
-        return HttpResponseRedirect(reverse('chart-data-edit', args=(str(chart.key()),)))
+        return HttpResponseRedirect(reverse('chart-data-edit', args=(chart.get_hash(),)))
     else:
         cf = ChartForm()
     return render_to_response('charter/data_input.html', {'f':cf})
 
-def data_edit(request, key):
-    chart = db.get(key)
+def data_edit(request, hash):
+    chart = Chart.get_by_id(pretty_decode(hash))
     if request.method == "POST":
         old_dataset = chart.data or None
         if chart.data:
@@ -51,7 +51,7 @@ def data_edit(request, key):
             cds.save()
             chart.data = cds
             chart.save()
-            return HttpResponseRedirect(reverse('chart-detail', args=(str(chart.key()),)))
+            return HttpResponseRedirect(reverse('chart-detail', args=(chart.get_hash(),)))
     else:
         if chart.data:
             fs = DataRowFormSet(instances=chart.data.data_rows)
@@ -62,8 +62,8 @@ def data_edit(request, key):
 def bulk_data_import(request):
     pass
 
-def chart_detail(request, key):
-    chart = Chart.get(key)
+def chart_detail(request, hash):
+    chart = Chart.get_by_id(pretty_decode(hash))
     if chart.data:
         graph_url, graph = get_graph(chart.data, _cht[chart.chart_type])
     else:
@@ -75,8 +75,8 @@ def chart_detail(request, key):
         'version': chart.data
     })
 
-def chart_detail_version(request, key, version_key):
-    chart = Chart.get(key)
+def chart_detail_version(request, hash, version_key):
+    chart = Chart.get_by_id(pretty_decode(hash))
     version = ChartDataSet.get(version_key)
     graph_url, graph = get_graph(version, _cht[chart.chart_type])
     return render_to_response('charter/detail.html', {

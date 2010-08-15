@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1><a href="{% url chart-detail chart.key %}">{{ chart.name }}</a></h1>
+<h1><a href="{% url chart-detail chart.get_hash %}">{{ chart.name }}</a></h1>
 {% if version.previous_version %}
 <h3>Revision {{ version.version }}<h3>
-<p><a href="{% url chart-detail-version chart.key version.previous_version.key %}">Previous Version</a></p>
+<p><a href="{% url chart-detail-version chart.get_hash version.previous_version.key %}">Previous Version</a></p>
 {% endif %}
 <img src="{{ graph_url }}" class="graph" />
 <p>
-  <a href="{% url chart-data-edit chart.key %}">Edit data</a>
+  <a href="{% url chart-data-edit chart.get_hash %}">Edit data</a>
 </p>
 {% endblock %}
 
 {% block extrahead %}
 {% if version_specific %}
-<link rel="alternate" type="application/json+oembed" href="{% url oembed %}?url=http://permachart.appengine.com{% url chart-detail chart.key %}" title="{{ chart.name }} oEmbed" />
+<link rel="alternate" type="application/json+oembed" href="{% url oembed %}?url=http://permachart.appengine.com{% url chart-detail chart.get_hash %}" title="{{ chart.name }} oEmbed" />
 {% else %}
-<link rel="alternate" type="application/json+oembed" href="{% url oembed %}?url=http://permachart.appengine.com{% url chart-detail-version chart.key version.key %}" title="{{ chart.name }} {{ version }} oEmbed" />
+<link rel="alternate" type="application/json+oembed" href="{% url oembed %}?url=http://permachart.appengine.com{% url chart-detail-version chart.get_hash version.key %}" title="{{ chart.name }} {{ version }} oEmbed" />
 {% endif %}
 {% endblock %}
