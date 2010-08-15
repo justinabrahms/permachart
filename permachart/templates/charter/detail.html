@@ -7,4 +7,7 @@
 <p><a href="{% url chart-detail-version chart.key version.previous_version.key %}">Previous Version</a></p>
 {% endif %}
 <img src="{{ graph_url }}" class="graph" />
+<p>
+  <a href="{% url chart-data-edit chart.key %}">Edit data</a>
+</p>
 {% endblock %}
