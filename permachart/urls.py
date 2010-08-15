@@ -10,6 +10,6 @@ urlpatterns = patterns(
     url('^tmp-data/$', charter_views.pop_data),
     url('^oembed/$', charter_views.oembed, name='oembed'),
     url('^(.*)/edit/$', charter_views.data_edit, name="chart-data-edit"),
-    url('^([^\/]+)/([^\/]+)/$', charter_views.chart_detail_version, name="chart-detail-version"),
-    url('^([^\/]+)/$', charter_views.chart_detail, name="chart-detail"),
+    url('^([-\w]+)/([-\w]+)/$', charter_views.chart_detail_version, name="chart-detail-version"),
+    url('^([-\w]+)/$', charter_views.chart_detail, name="chart-detail"),
 )
