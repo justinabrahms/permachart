@@ -72,7 +72,6 @@ class DataRowFormSet(object):
                 if not dr.has_changed() and \
                         hasattr(dr, 'empty_ok') and\
                         dr.empty_ok == True:
-                    # remove unused form
                     continue
                 return False
         return True
