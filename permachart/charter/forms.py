@@ -70,6 +70,16 @@ class DataRowFormSet(object):
                 self.forms.append(base_form)
     
     def is_valid(self):
+        """
+        App engine doesn't support the empty_permitted flag to model
+        forms, so we're going to dupe a bit of the validation logic
+        here.
+        
+        This is coupled with checking for a 'cleaned_data' attribute
+        on the form. If its not there, we'll assume its an empty form
+        that we can skip (otherwise, it wouldn't have passed
+        validation).
+        """
         for i, dr in enumerate(self.forms):
             if not dr.is_valid():
                 if not dr.has_changed() and \
