@@ -11,3 +11,11 @@
   <a href="{% url chart-data-edit chart.key %}">Edit data</a>
 </p>
 {% endblock %}
+
+{% block extrahead %}
+{% if version_specific %}
+<link rel="alternate" type="application/json+oembed" href="{% url oembed %}?url=http://permachart.appengine.com{% url chart-detail chart.key %}" title="{{ chart.name }} oEmbed" />
+{% else %}
+<link rel="alternate" type="application/json+oembed" href="{% url oembed %}?url=http://permachart.appengine.com{% url chart-detail-version chart.key version.key %}" title="{{ chart.name }} {{ version }} oEmbed" />
+{% endif %}
+{% endblock %}

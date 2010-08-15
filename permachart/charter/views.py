@@ -83,7 +83,8 @@ def chart_detail_version(request, key, version_key):
         'chart':chart,
         'graph': graph,
         'graph_url': graph_url,
-        'version': version
+        'version': version,
+        'version_specific': True
     })
 
 def chart_list(request):
