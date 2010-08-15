@@ -3,7 +3,7 @@ html{
 }
 
 body {
-    width: 960px;
+    width: 700px;
     margin: 0 auto;
     background-color: #FAFAFA;
 }
@@ -14,22 +14,23 @@ div#content {
     padding: 1em 30px 30px 30px;
     font-size: 0.9em;
     border-left:1px solid #ddd;
+    width: 100%;
 }
 
 
-div.footer {
+div#footer {
     color: #999;
     width: 100%;
     padding: 9px 0 18px;
     text-align: center;
     font-size: 60%;
-    background: #fff;
+    background: #FAFAFA;
 }
 
-div.footer a {
+div#footer a {
     color: #444;
 }
-div.footer a:hover, div.related a:hover {
+div#footer a:hover, div.related a:hover {
     border-bottom:1px solid #4362b0;
 }
 
@@ -38,13 +39,34 @@ div#header {
 }
 
 div#header ul {
+    float: right;
     list-style: none;
     padding: 0;
     margin: 0;
-    float: right;
 }
 
 div#header ul li {
     float: left;
     margin: 0 25px;
+}
+
+img.graph {
+    margin: 0 auto;
+    display: block;
+}
+
+ul.chart_list {
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+    display: block;
+}
+
+ul.chart_list li{
+    float: left;
+    padding: 8px;
+    height: 160px;
+    width: 180px;
+    display: inline;
 }

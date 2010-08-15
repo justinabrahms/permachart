@@ -6,5 +6,5 @@
 <h3>Revision {{ version.version }}<h3>
 <p><a href="{% url chart-detail-version chart.key version.previous_version.key %}">Previous Version</a></p>
 {% endif %}
-<img src="{{ graph_url }}" />
+<img src="{{ graph_url }}" class="graph" />
 {% endblock %}

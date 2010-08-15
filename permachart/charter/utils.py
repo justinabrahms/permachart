@@ -1,4 +1,4 @@
-from charter.models import DataRow
+from google.appengine.ext import db
 import pygooglechart
 
 from urllib import quote
@@ -15,16 +15,17 @@ _cht = dict({
 
 WIDTH = 600
 HEIGHT = 480
+Y_STEPS = 6
 SPACE_TO_BAR = .6
 
-def get_graph_url(dataset,cht='p3'):
+def get_graph(dataset,cht='p3',width=WIDTH,height=HEIGHT, y_steps=Y_STEPS):
     data = dict({})
     data['cht'] = cht
     data['chs'] = '600x480'
     chl = []
     chd = []
     for data_item in dataset.data_rows:
-        row = DataRow.get(data_item)
+        row = db.get(data_item)
         chl.append(row.data_key)
         chd.append(float(row.data_value))
     maxim = -1
@@ -36,7 +37,6 @@ def get_graph_url(dataset,cht='p3'):
             minim = int(ch)
             
     yrange = (minim, maxim)
-    y_steps = 6
     y_step = (yrange[1] - yrange[0]) / y_steps
     y_axis = []
     for x in range(y_steps):
@@ -44,21 +44,21 @@ def get_graph_url(dataset,cht='p3'):
     y_axis.append(yrange[1])
 
     if cht == 'p':
-        G = pygooglechart.PieChart2D(WIDTH,HEIGHT)
+        G = pygooglechart.PieChart2D(width,height)
         G.set_pie_labels(chl)
     if cht == 'p':
-        G = pygooglechart.PieChart2D(WIDTH,HEIGHT)
+        G = pygooglechart.PieChart2D(width,height)
         G.set_pie_labels(chl)
     if cht == 'bvg':
-        G = pygooglechart.GroupedVerticalBarChart(WIDTH, HEIGHT, y_range=yrange)
-        bars = WIDTH / len(chd)
+        G = pygooglechart.GroupedVerticalBarChart(width, height, y_range=yrange)
+        bars = width / len(chd)
         G.set_axis_labels(pygooglechart.Axis.LEFT, y_axis)
         G.set_axis_labels(pygooglechart.Axis.BOTTOM, chl)
         G.set_bar_width(int(bars * SPACE_TO_BAR))
         G.set_bar_spacing(int(bars * (.9 - SPACE_TO_BAR)))
         G.set_group_spacing(int(bars * (.9 - SPACE_TO_BAR)))
     if cht == 'lc':
-        G = pygooglechart.SimpleLineChart(WIDTH, HEIGHT, y_range=yrange)
+        G = pygooglechart.SimpleLineChart(width, height, y_range=yrange)
         G.set_axis_labels(pygooglechart.Axis.LEFT, y_axis)
         G.set_axis_labels(pygooglechart.Axis.BOTTOM, chl)
     G.add_data(chd)
