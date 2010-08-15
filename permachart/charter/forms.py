@@ -40,34 +40,21 @@ class DataRowFormSet(object):
                 # fetch keys for validation
                 # FIXME: Can probably do a bulk get
                 obj = db.get(obj)
+            form_kwargs = {'instance': obj,
+                           'prefix': '%i' % i}
             if data:
-                base_form = self.base_form(
-                    instance=obj,
-                    data=data,
-                    prefix="%i" % i,
-                )
-            else:
-                base_form = self.base_form(
-                    instance=obj,
-                    prefix="%i" % i,
-                )
+                form_kwargs.update(dict(data=data))
+            base_form = self.base_form(**form_kwargs)
             self.forms.append(base_form)
 
         offset = len(instances)
         for i in range(extra_forms):
+            form_kwargs = dict(prefix="%i" % (offset+i))
             if data:
-                base_form = self.base_form(
-                    data=data,
-                    prefix="%i" % (offset+i),
-                )
-                base_form.empty_ok = True
-                self.forms.append(base_form)
-            else:
-                base_form = self.base_form(
-                    prefix="%i" % (offset+i),
-                )
-                base_form.empty_ok = True
-                self.forms.append(base_form)
+                form_kwargs.update({'data':data})
+            base_form = self.base_form(**form_kwargs)
+            base_form.empty_ok = True
+            self.forms.append(base_form)
     
     def is_valid(self):
         """
