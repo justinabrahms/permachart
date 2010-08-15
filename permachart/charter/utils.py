@@ -62,6 +62,7 @@ def get_graph_url(dataset,cht='p3'):
         G.set_axis_labels(pygooglechart.Axis.LEFT, y_axis)
         G.set_axis_labels(pygooglechart.Axis.BOTTOM, chl)
     G.add_data(chd)
+    G.fill_solid(pygooglechart.Chart.BACKGROUND, 'FAFAFA00')
     return G.get_url(), G
 
 def pretty_encode(num, alphabet=ALPHABET):

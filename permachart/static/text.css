@@ -1,0 +1,102 @@
+/**
+ * Sphinx stylesheet -- default theme
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+ 
+/* -- fontfaces ----------------------------------------------------------- */
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans+Std+Light);
+/* -- page layout ----------------------------------------------------------- */
+ 
+body {
+    font-family: 'Droid Sans', helvetica, arial, serif;
+    font-size: 100%;
+    background-color: #111111;
+    color: #555555;
+    margin: 0;
+    padding: 0;
+}
+
+hr{
+    border: 1px solid #B1B4B6;
+}
+
+/* -- body styles ----------------------------------------------------------- */
+ 
+a {
+    color: #0046c0;
+    text-decoration: none;
+}
+ 
+a:hover {
+    color: #c07100;
+    border-bottom:1px solid #eee;
+}
+ 
+div#content h1,
+div#content h2,
+div#content h3,
+div#content h4,
+div#content h5,
+div#content h6 {
+    font-family: 'Josefin Sans Std Light', arial, serif;
+    font-weight: normal;
+    color: #000;
+    margin: 36px 0px 9px 0px;
+    padding: 5px 0 5px 0px;
+    text-shadow: 0px 1px 0 white;
+    border-bottom: 1px solid #ddd;
+}
+ 
+div#content h1 { margin-top: 0; font-size: 280%; }
+div#content h2 { font-size: 200%; }
+div#content h3 { font-size: 180%; }
+div#content h4 { font-size: 150%; }
+div#content h5 { font-size: 130%; }
+div#content h6 { font-size: 120%; }
+ 
+a.headerlink {
+    color: #c07100;
+    font-size: 0.8em;
+    padding: 0 4px 0 4px;
+    text-decoration: none;
+}
+ 
+a.headerlink:hover {
+    background-color: #c07100;
+    color: white;
+}
+ 
+div#content p, div#content dd, div#content li {
+    line-height: 1.5em;
+}
+div#content p{
+margin:1.2em 0;
+} 
+ 
+pre {
+    font: 12px/18px 'Droid Sans Mono', arial, serif;
+    padding: 10px;
+    background-color: #fcfadd;
+    border:1px solid #ddd;
+    color: #222222;
+    line-height: 1.5em;
+    font-size: 1.1em;
+    margin: 1.5em 0 1.5em 0;
+    -webkit-box-shadow: 0px 0px 4px #d8d8d8;
+    -moz-box-shadow: 0px 0px 4px #d8d8d8;
+    box-shadow: 0px 0px 4px #d8d8d8;
+}
+.pre{
+    font-family: 'Droid Sans Mono', arial, serif;
+
+}
+ 
+tt {
+    color: #222222;
+    padding: 1px 2px;
+    font-size: 1.2em;
+    font-family: monospace;
+}
