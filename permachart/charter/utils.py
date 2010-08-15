@@ -7,7 +7,7 @@ from urlparse import urlunparse
 ALPHABET="23456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
 
 _cht = dict({
-    'pie': 'p3',
+    'pie': 'p',
     'pie2d': 'p',
     'bar': 'bvg',
     'line': 'lc',
@@ -43,8 +43,8 @@ def get_graph_url(dataset,cht='p3'):
         y_axis.append((x * y_step) + yrange[0])
     y_axis.append(yrange[1])
 
-    if cht == 'p3':
-        G = pygooglechart.PieChart3D(WIDTH,HEIGHT)
+    if cht == 'p':
+        G = pygooglechart.PieChart2D(WIDTH,HEIGHT)
         G.set_pie_labels(chl)
     if cht == 'p':
         G = pygooglechart.PieChart2D(WIDTH,HEIGHT)
