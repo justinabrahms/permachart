@@ -3,7 +3,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] =  'settings'
 sys.path[0:0] = [
     os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'google_appengine')),
     os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'deps', 'Django-1.2.1')),
-    os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'deps', 'pygooglechart-0.2.1')),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'deps', 'pychart')),
 ]
 import unittest
 from charter.form_utils import BaseFormSet
