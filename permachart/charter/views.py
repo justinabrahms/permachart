@@ -24,7 +24,7 @@ def manual_data_import(request):
         cf = ChartForm(request.POST)
         if cf.is_valid():
             chart = cf.save()
-        return HttpResponseRedirect(reverse('chart-detail', args=(str(chart.key),)))
+        return HttpResponseRedirect(reverse('chart-detail', args=(str(chart.key()),)))
     else:
         cf = ChartForm()
     return render_to_response('charter/data_input.html', {'f':cf})
@@ -32,9 +32,20 @@ def manual_data_import(request):
 def data_edit(request, key):
     chart = db.get(key)
     if request.method == "POST":
+        old_dataset = chart.data
         fs = DataRowFormSet(data=request.POST, instances=chart.data.data_rows)
         if fs.is_valid():
-            fs.save()
+            keys = []
+            for form in fs.forms:
+                dr = DataRow(**form.cleaned_data)
+                keys.append(dr.save())
+            cds = ChartDataSet(version = old_dataset.version + 1,
+                               previous_version = old_dataset,
+                               data_rows = keys)
+            cds.save()
+            chart.data = cds
+            chart.save()
+            return HttpResponseRedirect(reverse('chart-detail', args=(str(chart.key()),)))
     else:
         fs = DataRowFormSet(instances=chart.data.data_rows)
     return render_to_response('charter/data_edit.html', {'formset': fs})
