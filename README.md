@@ -6,7 +6,7 @@ rougly a bit.ly for charts.
 
 v0.1
 
-* bulk imput of data
+* bulk input of data
 * get chart at opaque url
 * versioned data stores
 
