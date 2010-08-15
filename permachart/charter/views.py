@@ -121,7 +121,6 @@ def oembed(request):
         "provier_url": "http://permachart.appengine.com"
     }
     return HttpResponse(dumps(oembed))
-    
 
 def pop_data(request):
     import time, random
