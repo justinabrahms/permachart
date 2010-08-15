@@ -32,7 +32,9 @@ def manual_data_import(request):
 def data_edit(request, key):
     chart = db.get(key)
     if request.method == "POST":
-        fs = DataRowFormSet(instances=chart.data.data_rows)
+        fs = DataRowFormSet(data=request.POST, instances=chart.data.data_rows)
+        if fs.is_valid():
+            fs.save()
     else:
         fs = DataRowFormSet(instances=chart.data.data_rows)
     return render_to_response('charter/data_edit.html', {'formset': fs})

@@ -24,6 +24,21 @@ class DataRowFormSet(object):
     base_form = DataRowForm
 
     def __init__(self, data=None, instances=None):
+        """
+        Testing Concerns:
+         - deleting an item
+         - adding an item
+         - altering the key
+         - altering the value
+        """
+        if data:
+            if not hasattr(data, '__iter__'):
+                raise KeyError("data attribute must be an iterable.")
+            if len(instances) == len(data):
+                raise KeyError("data and instances iterables must be the same length")
+            foo = data.__dict__
+            assert(False)
+        
         self.forms = []
         for i, obj in enumerate(instances):
             if isinstance(obj, db.Key):
