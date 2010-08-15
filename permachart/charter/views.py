@@ -99,16 +99,16 @@ def oembed(request):
         return HttpResponse('{"error":"No Url Provided."}')
     url_parts = urlparse(request.GET.get('url'))
     keys = url_parts.path.split('/')
-    for key in range(len(keys)):
-        if len(keys[key]) and keys[key][-1] == '+': #stats
-            keys[key] = keys[key][:-1]
-    chart = Chart.get(keys[1])
+    for i in range(len(keys)):
+        if len(keys[i]) and keys[i][-1] == '+': #stats
+            keys[i] = keys[i][:-1]
+    chart = Chart.get_by_id(pretty_decode(keys[1]))
     if len(keys) > 3:
         version = ChartDataSet.get(keys[2])
-        perma = reverse('chart-detail-version', args=(keys[1], keys[2]))
+        perma = reverse('chart-detail-version', args=(pretty_decocde(keys[1]), keys[2]))
     else:
         version = chart.data
-        perma = reverse('chart-detail', args=(keys[1], ))
+        perma = reverse('chart-detail', args=(pretty_decode(keys[1]),))
     graph_url, graph = get_graph(version, _cht[chart.chart_type], 600, 480)
     oembed = {
         "version": str(version.version),
