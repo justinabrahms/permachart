@@ -4,7 +4,7 @@ import pygooglechart
 from urllib import quote
 from urlparse import urlunparse
 
-ALPHABET="23456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
+ALPHABET="23456789bcdfghjkmnpqrstvwxyzBCDFGHJKLMNPQRSTUVWXYZ"
 
 _cht = dict({
     'pie': 'p',

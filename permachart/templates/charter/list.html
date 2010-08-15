@@ -3,7 +3,7 @@
 {% if chart_list %}
 <ul class="chart_list clearfix">
   {% for chart in chart_list %}
-  <li><a href="{% url chart-detail chart.key %}"><img src="{{ chart.small_chart.get_url }}"/><br/>{{ chart }}</a></li>
+  <li><a href="{% url chart-detail chart.key %}"><img src="{{ chart.small_chart.get_url }}"/></a><br/><a href="{% url chart-detail chart.key %}">{{ chart }}</a></li>
   {% endfor %}
 </ul>
 <br class="clearfix" />
