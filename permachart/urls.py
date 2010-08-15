@@ -9,5 +9,6 @@ urlpatterns = patterns(
     url('^list/$', charter_views.chart_list, name="chart-list"),
     url('^tmp-data/$', charter_views.pop_data),
     url('^(.*)/edit/$', charter_views.data_edit, name="chart-data-edit"),
-    url('^(.*)/$', charter_views.chart_detail, name="chart-detail"),
+    url('^([^\/]+)/([^\/]+)/$', charter_views.chart_detail_version, name="chart-detail-version"),
+    url('^([^\/]+)/$', charter_views.chart_detail, name="chart-detail"),
 )

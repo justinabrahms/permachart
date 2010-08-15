@@ -41,12 +41,24 @@ def bulk_data_import(request):
     pass
 
 def chart_detail(request, key):
-    chart = db.get(key)
+    chart = Chart.get(key)
     graph_url, graph = get_graph_url(chart.data, _cht[chart.chart_type])
     return render_to_response('charter/detail.html', {
         'chart':chart, 
         'graph': graph,
-        'graph_url': graph_url
+        'graph_url': graph_url,
+        'version': chart.data
+    })
+
+def chart_detail_version(request, key, version_key):
+    chart = Chart.get(key)
+    version = ChartDataSet.get(version_key)
+    graph_url, graph = get_graph_url(version, _cht[chart.chart_type])
+    return render_to_response('charter/detail.html', {
+        'chart':chart,
+        'graph': graph,
+        'graph_url': graph_url,
+        'version': version
     })
 
 def chart_list(request):
