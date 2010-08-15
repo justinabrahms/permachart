@@ -7,7 +7,8 @@ from google.appengine.api import users
 from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm, DataSetForm, DataRowForm, DataRowFormSet
 from charter.utils import _cht, get_graph
-
+from urlparse import urlparse
+from json import dumps
 
 def get_object_or_404(cls, **kwargs):
     try:
@@ -91,6 +92,35 @@ def chart_list(request):
 
 def get_chart_resource(request):
     pass
+    
+def oembed(request):
+    if not request.GET.get('url'):
+        return HttpResponse('{"error":"No Url Provided."}')
+    url_parts = urlparse(request.GET.get('url'))
+    keys = url_parts.path.split('/')
+    for key in range(len(keys)):
+        if len(keys[key]) and keys[key][-1] == '+': #stats
+            keys[key] = keys[key][:-1]
+    chart = Chart.get(keys[1])
+    if len(keys) > 3:
+        version = ChartDataSet.get(keys[2])
+        perma = reverse('chart-detail-version', args=(keys[1], keys[2]))
+    else:
+        version = chart.data
+        perma = reverse('chart-detail', args=(keys[1], ))
+    graph_url, graph = get_graph(version, _cht[chart.chart_type], 600, 480)
+    oembed = {
+        "version": str(version.version),
+        "type": "photo",
+        "width": 600,
+        "height": 480,
+        "title": chart.name,
+        "url": graph_url,
+        "provider_name": "Permachart",
+        "provier_url": "http://permachart.appengine.com"
+    }
+    return HttpResponse(dumps(oembed))
+    
 
 def pop_data(request):
     import time, random
