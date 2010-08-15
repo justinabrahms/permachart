@@ -2,10 +2,8 @@ import logging, os, sys
 
 # Google App Engine imports.
 from google.appengine.ext.webapp import util
-
-# # Remove the standard version of Django.
-for k in [k for k in sys.modules if k.startswith('django')]:
-    del sys.modules[k]
+from google.appengine.dist import use_library
+use_library('django', '1.1')
 
 # # Force sys.path to have our own directory first, in case we want to import
 # # from it.
