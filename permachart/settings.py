@@ -17,22 +17,17 @@ MEDIA_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/media/'
 SECRET_KEY = '5343xe*^^nc69qa%khwav1)dq^&s2bfa#oc_hm2p#zl$z-x+l*'
 ROOT_URLCONF = 'permachart.urls'
-
-DATABASES = {
-    'default': {
-        'ENGINE': '', 
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
+DATABASE_ENGINE = ''
+DATABASE_NAME = ''
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+DATABASE_HOST = ''
+DATABASE_PORT = ''
 
 
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.filesystem.load_template_source',
+    'django.template.loaders.app_directories.load_template_source',
 )
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
