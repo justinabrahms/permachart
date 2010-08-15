@@ -60,15 +60,22 @@ class DataRowFormSet(object):
                     data=data,
                     prefix="%i" % (offset+i),
                 )
+                base_form.empty_ok = True
                 self.forms.append(base_form)
             else:
                 base_form = self.base_form(
                     prefix="%i" % (offset+i),
                 )
+                base_form.empty_ok = True
                 self.forms.append(base_form)
     
     def is_valid(self):
-        for dr in self.forms:
+        for i, dr in enumerate(self.forms):
             if not dr.is_valid():
+                if not dr.has_changed() and \
+                        hasattr(dr, 'empty_ok') and\
+                        dr.empty_ok == True:
+                    # remove unused form
+                    continue
                 return False
         return True

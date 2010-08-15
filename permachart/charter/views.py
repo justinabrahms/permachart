@@ -40,8 +40,9 @@ def data_edit(request, key):
         if fs.is_valid():
             keys = []
             for form in fs.forms:
-                dr = DataRow(**form.cleaned_data)
-                keys.append(dr.save())
+                if hasattr(form, 'cleaned_data'):
+                    dr = DataRow(**form.cleaned_data)
+                    keys.append(dr.save())
             version = old_dataset.version + 1 if old_dataset else 1
             cds = ChartDataSet(version = version,
                                previous_version = old_dataset,
