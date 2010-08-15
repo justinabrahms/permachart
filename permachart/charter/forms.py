@@ -41,28 +41,31 @@ class DataRowFormSet(object):
                 # FIXME: Can probably do a bulk get
                 obj = db.get(obj)
             if data:
-                self.forms.append(
-                    self.base_form(
-                        instance=obj,
-                        data=data,
-                        prefix="%i" % i,
-                    )
+                base_form = self.base_form(
+                    instance=obj,
+                    data=data,
+                    prefix="%i" % i,
                 )
-
             else:
-                self.forms.append(
-                    self.base_form(
-                        instance=obj,
-                        prefix="%i" % i,
-                    )
+                base_form = self.base_form(
+                    instance=obj,
+                    prefix="%i" % i,
                 )
+            self.forms.append(base_form)
+
         offset = len(instances)
         for i in range(extra_forms):
-            self.forms.append(
-                self.base_form(
+            if data:
+                base_form = self.base_form(
+                    data=data,
                     prefix="%i" % (offset+i),
                 )
-            )
+                self.forms.append(base_form)
+            else:
+                base_form = self.base_form(
+                    prefix="%i" % (offset+i),
+                )
+                self.forms.append(base_form)
     
     def is_valid(self):
         for dr in self.forms:
