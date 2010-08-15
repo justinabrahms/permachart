@@ -14,7 +14,7 @@ div#content {
     padding: 1em 30px 30px 30px;
     font-size: 0.9em;
     border-left:1px solid #ddd;
-    width: 100%;
+    width: 670px;
 }
 
 
@@ -35,7 +35,7 @@ div#footer a:hover, div.related a:hover {
 }
 
 div#header {
-    padding: 40px;
+    padding: 40px 0 40px 0;
 }
 
 div#header ul {
@@ -47,7 +47,8 @@ div#header ul {
 
 div#header ul li {
     float: left;
-    margin: 0 25px;
+    margin: 0 0 0 25px;
+    text-align: right;
 }
 
 img.graph {
@@ -56,7 +57,6 @@ img.graph {
 }
 
 ul.chart_list {
-    float: left;
     list-style: none;
     padding: 0;
     margin: 10px;
