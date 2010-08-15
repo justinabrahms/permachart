@@ -2,18 +2,28 @@
 {% block content %}
 <form method="POST">
   <table>
-    {% for sf in formset.forms %}
-    <tr>
-      <td>
-        <table>
-          {{ sf.as_table }}
-        </table>
-      </td>
-    </tr>
-    {% endfor %}
-    <tr>
-      <td><input type="submit" /></td>
-    </tr>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sf in formset.forms %}
+      <tr>
+        <td>
+          <tr>
+            {% for field in sf %} 
+            <td>{{ field }}</td>
+            {% endfor %}
+          </tr>
+        </td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td><input type="submit" /></td>
+      </tr>
+    </tbody>
   </table>
 </form>
 {% endblock %}
