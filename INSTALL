@@ -17,3 +17,17 @@ Open GoogleAppEngineLauncher
     Add app.yaml to SDK
     Run App
     Click "Browse"
+    
+Build a test graph
+    http://localhost:<port>/tmp-data/
+
+    
+Testing oEmbed
+--------------
+run the appengine test server
+
+change the port on line 126 of jquery.oembed.js to match your port.
+
+Put a test url (http://localhost:<port>/<chartkey>/) into the <a href="" on test_oembed.html
+
+open oembedtest/test_oembed.html in your browser
