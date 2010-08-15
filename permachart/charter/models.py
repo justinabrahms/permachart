@@ -1,6 +1,8 @@
 import hashlib
 from google.appengine.ext import db
 
+from charter.utils import _cht, get_graph
+
 CHART_CHOICES = ('pie','bar','line',)
 
 class ChartDataSet(db.Model):
@@ -29,3 +31,7 @@ class Chart(db.Model):
     def put(self, *args, **kwargs):
         self.hash = self.get_hash()
         super(Chart, self).put(*args, **kwargs)
+    
+    def small_chart(self):
+        url, graph = get_graph(self.data, _cht[self.chart_type], 180, 144, 2)
+        return graph

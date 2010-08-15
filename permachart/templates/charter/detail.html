@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ chart.name }}</h1>
-<img src="{{ graph_url }}" />
+<h1><a href="{% url chart-detail chart.key %}">{{ chart.name }}</a></h1>
+{% if version.previous_version %}
+<h3>Revision {{ version.version }}<h3>
+<p><a href="{% url chart-detail-version chart.key version.previous_version.key %}">Previous Version</a></p>
+{% endif %}
+<img src="{{ graph_url }}" class="graph" />
 {% endblock %}

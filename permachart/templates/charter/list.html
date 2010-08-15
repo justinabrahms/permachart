@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 {% if chart_list %}
-<ul>
+<ul class="chart_list clearfix">
   {% for chart in chart_list %}
-  <li><a href="{% url chart-detail chart.key %}">{{ chart }}</a></li>
+  <li><img src="{{ chart.small_chart.get_url }}"/><br/><a href="{% url chart-detail chart.key %}">{{ chart }}</a></li>
   {% endfor %}
 </ul>
+<br class="clearfix" />
 {% else %}
 <p>Sorry, no charts. <a href="{% url chart-new %}">Make one?</a></p>
 {% endif %}
