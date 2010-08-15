@@ -2,7 +2,15 @@
 {% block content %}
 <form method="POST">
   <table>
-    {{ f.as_table }}
+    {% for sf in formset.forms %}
+    <tr>
+      <td>
+        <table>
+          {{ sf.as_table }}
+        </table>
+      </td>
+    </tr>
+    {% endfor %}
     <tr>
       <td><input type="submit" /></td>
     </tr>

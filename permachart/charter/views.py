@@ -5,7 +5,7 @@ from google.appengine.ext import db
 from google.appengine.api import users
 
 from charter.models import Chart, ChartDataSet, DataRow
-from charter.forms import ChartForm, DataSetForm
+from charter.forms import ChartForm, DataSetForm, DataRowForm, DataRowFormSet
 from charter.utils import _cht, get_graph_url
 
 
@@ -31,11 +31,13 @@ def manual_data_import(request):
 
 def data_edit(request, key):
     chart = db.get(key)
-    if chart.data:
-        f = DataSetForm(request.POST or None, instance=chart.data)
+    if request.method == "POST":
+        fs = DataRowFormSet(data=request.POST, instances=chart.data.data_rows)
+        if fs.is_valid():
+            fs.save()
     else:
-        pass
-    return render_to_response('charter/data_edit.html', {'f':f})
+        fs = DataRowFormSet(instances=chart.data.data_rows)
+    return render_to_response('charter/data_edit.html', {'formset': fs})
 
 def bulk_data_import(request):
     pass
