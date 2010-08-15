@@ -123,7 +123,7 @@
 	}
 
     var providers = [
-        new OEmbedProvider("localhost", "permachartik.appengine.com", "http://permachartik.appengine.com/oembed/"),
+        new OEmbedProvider("localhost", "localhost:10001", "http://localhost:10001/oembed/"),
         new OEmbedProvider("fivemin", "5min.com"),
         new OEmbedProvider("amazon", "amazon.com"),
         new OEmbedProvider("flickr", "flickr", "http://flickr.com/services/oembed", "jsoncallback"),    
