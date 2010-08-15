@@ -32,14 +32,18 @@ def manual_data_import(request):
 def data_edit(request, key):
     chart = db.get(key)
     if request.method == "POST":
-        old_dataset = chart.data
-        fs = DataRowFormSet(data=request.POST, instances=chart.data.data_rows)
+        old_dataset = chart.data or None
+        if chart.data:
+            fs = DataRowFormSet(data=request.POST, instances=chart.data.data_rows)
+        else:
+            fs = DataRowFormSet(data=request.POST)
         if fs.is_valid():
             keys = []
             for form in fs.forms:
                 dr = DataRow(**form.cleaned_data)
                 keys.append(dr.save())
-            cds = ChartDataSet(version = old_dataset.version + 1,
+            version = old_dataset.version + 1 if old_dataset else 1
+            cds = ChartDataSet(version = version,
                                previous_version = old_dataset,
                                data_rows = keys)
             cds.save()
@@ -58,7 +62,10 @@ def bulk_data_import(request):
 
 def chart_detail(request, key):
     chart = Chart.get(key)
-    graph_url, graph = get_graph(chart.data, _cht[chart.chart_type])
+    if chart.data:
+        graph_url, graph = get_graph(chart.data, _cht[chart.chart_type])
+    else:
+        graph_url, graph = None, None
     return render_to_response('charter/detail.html', {
         'chart':chart, 
         'graph': graph,
