@@ -1,4 +1,4 @@
-from automatic_starter.decorators import login_required
+from automatic_starter.decorators import login_required, user_in_request
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
@@ -19,10 +19,6 @@ def get_object_or_404(cls, **kwargs):
     except:
         raise Http404
 
-def signin(request):
-    # likely handled by appengine, but might require a callback?
-    pass
-
 @login_required
 def manual_data_import(request):
     if request.method == "POST":
@@ -34,7 +30,10 @@ def manual_data_import(request):
         return HttpResponseRedirect(reverse('chart-data-edit', args=(chart.get_hash(),)))
     else:
         cf = ChartForm()
-    return render_to_response('charter/data_input.html', {'f':cf})
+    return render_to_response('charter/data_input.html', {
+        'f':cf,
+        'user': request.g_app_user,
+    })
 
 @login_required
 def data_edit(request, hash):
@@ -60,17 +59,24 @@ def data_edit(request, hash):
             cds.save()
             chart.data = cds
             chart.save()
-            return HttpResponseRedirect(reverse('chart-detail', args=(chart.get_hash(),)))
+            return HttpResponseRedirect(reverse(
+                'chart-detail',
+                args=(chart.get_hash(),)
+            ))
     else:
         if chart.data:
             fs = DataRowFormSet(instances=chart.data.data_rows)
         else:
             fs = DataRowFormSet()
-    return render_to_response('charter/data_edit.html', {'formset': fs})
+    return render_to_response('charter/data_edit.html', {
+        'formset': fs,
+        'user': request.g_app_user,
+    })
 
 def bulk_data_import(request):
     pass
 
+@user_in_request
 def chart_detail(request, hash):
     chart = Chart.get_by_id(pretty_decode(hash))
     if chart.data:
@@ -81,9 +87,11 @@ def chart_detail(request, hash):
         'chart':chart, 
         'graph': graph,
         'graph_url': graph_url,
-        'version': chart.data
+        'version': chart.data,
+        'user': request.g_app_user,
     })
 
+@user_in_request
 def chart_detail_version(request, hash, version_key):
     chart = Chart.get_by_id(pretty_decode(hash))
     version = ChartDataSet.get(version_key)
@@ -93,12 +101,34 @@ def chart_detail_version(request, hash, version_key):
         'graph': graph,
         'graph_url': graph_url,
         'version': version,
-        'version_specific': True
+        'version_specific': True,
+        'user': request.g_app_user,
     })
 
+@user_in_request
 def chart_list(request):
     chart_list = Chart.all()
-    return render_to_response('charter/list.html', {'chart_list':chart_list})
+    return render_to_response('charter/list.html', {
+        'chart_list':chart_list,
+        'user': request.g_app_user,
+    })
+
+@login_required
+def my_chart_list(request):
+    chart_list = Chart.all()
+    chart_list.filter("user", request.g_app_user)
+    return render_to_response('charter/list.html', {
+        'chart_list':chart_list,
+        'user': request.g_app_user,
+    })
+    
+@user_in_request
+def home(request):
+    chart_list = Chart.all()[:3]
+    return render_to_response('home.html', {
+        'chart_list':chart_list,
+        'user': request.g_app_user,
+    })    
 
 def get_chart_resource(request):
     pass
@@ -119,10 +149,6 @@ def oembed(request):
         version = chart.data
         perma = reverse('chart-detail', args=(pretty_decode(keys[1]),))
     graph_url, graph = get_graph(version, _cht[chart.chart_type], 600, 480)
-    graph_parts = urlparse(graph_url)
-    graph_qs = parse_qs(graph_parts.query)
-    new_qs = '&'.join([k+'='+quote(str(v)) for (k,v) in graph_qs.items()])
-    graph_url = urlunparse((graph_parts.scheme, graph_parts.netloc, graph_parts.path, graph_parts.params, new_qs, graph_parts.fragment))
     oembed = {
         "version": str(version.version),
         "type": "photo",
@@ -130,11 +156,13 @@ def oembed(request):
         "height": 480,
         "title": chart.name,
         "url": graph_url,
+        "author": chart.user.nickname(),
         "provider_name": "Permachart",
         "provier_url": "http://permachart.appengine.com"
     }
     return HttpResponse(json.dumps(oembed, sort_keys=True, indent=4), mimetype='application/javascript')
 
+@login_required
 def pop_data(request):
     import time, random
     dr = DataRow(data_key="asdf", data_value=str(random.randint(0,1000)))
@@ -147,6 +175,6 @@ def pop_data(request):
     cds.put()
     cds2 = ChartDataSet(version=2, previous_version=cds, data_rows=[dr_key, dr3_key])
     cds2.put()
-    c = Chart(name='%s' % time.time(), chart_type="pie", data=cds2)
+    c = Chart(name='%s' % time.time(), chart_type="pie", data=cds2, user=request.g_app_user)
     c.put()
     return HttpResponse('success')
