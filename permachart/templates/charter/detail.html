@@ -8,7 +8,7 @@
 {% endif %}
 <img src="{{ graph_url }}" class="graph" />
 <p>
-  <a href="{% url chart-data-edit chart.get_hash %}">Edit data</a>
+  {% ifequal chart.user user %}<a href="{% url chart-data-edit chart.get_hash %}">Edit data</a>{% endifequal %}
 </p>
 {% endblock %}
 
