@@ -149,10 +149,6 @@ def oembed(request):
         version = chart.data
         perma = reverse('chart-detail', args=(pretty_decode(keys[1]),))
     graph_url, graph = get_graph(version, _cht[chart.chart_type], 600, 480)
-    graph_parts = urlparse(graph_url)
-    graph_qs = parse_qs(graph_parts.query)
-    new_qs = '&'.join([k+'='+quote(str(v)) for (k,v) in graph_qs.items()])
-    graph_url = urlunparse((graph_parts.scheme, graph_parts.netloc, graph_parts.path, graph_parts.params, new_qs, graph_parts.fragment))
     oembed = {
         "version": str(version.version),
         "type": "photo",
@@ -160,7 +156,7 @@ def oembed(request):
         "height": 480,
         "title": chart.name,
         "url": graph_url,
-        "author": chart.user,
+        "author": chart.user.nickname(),
         "provider_name": "Permachart",
         "provier_url": "http://permachart.appengine.com"
     }
