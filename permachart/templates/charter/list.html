@@ -3,7 +3,10 @@
 {% if chart_list %}
 <ul class="chart_list clearfix">
   {% for chart in chart_list %}
+  {% if chart.data %}
+  {# FIXME: this is an error state. Charts shouldn't be kept if they're missing data. #}
   <li><a href="{% url chart-detail chart.get_hash %}"><img src="{{ chart.small_chart.get_url }}"/></a><br/><a href="{% url chart-detail chart.get_hash %}">{{ chart }}</a></li>
+  {% endif %}
   {% endfor %}
 </ul>
 <br class="clearfix" />
