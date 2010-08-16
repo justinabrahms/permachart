@@ -165,6 +165,7 @@ def oembed(request):
 @login_required
 def pop_data(request):
     import time, random
+    chart_types = ['pie','bar','line']
     dr = DataRow(data_key="asdf", data_value=str(random.randint(0,1000)))
     dr_key = dr.put()
     dr2 = DataRow(data_key="asdf2", data_value=str(random.randint(0,1000)))
@@ -175,6 +176,6 @@ def pop_data(request):
     cds.put()
     cds2 = ChartDataSet(version=2, previous_version=cds, data_rows=[dr_key, dr3_key])
     cds2.put()
-    c = Chart(name='%s' % time.time(), chart_type="pie", data=cds2, user=request.g_app_user)
+    c = Chart(name='%s' % time.time(), chart_type=chart_types[random.randint(0,2)], data=cds2, user=request.g_app_user)
     c.put()
-    return HttpResponse('success')
+    return HttpResponseRedirect(reverse('chart-detail',c.key()))

@@ -1,4 +1,4 @@
-application: permachartik
+application: permachart
 version: alpha1
 runtime: python
 api_version: 1
