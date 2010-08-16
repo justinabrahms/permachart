@@ -28,12 +28,17 @@ class Chart(db.Model):
         return pretty_encode(self.key().id())
 
     def small_chart(self):
-        url, graph = get_graph(self.data, _cht[self.chart_type], 180, 144, 2)
+        try:
+            url, graph = get_graph(self.data, _cht[self.chart_type], 180, 144, 2)
+        except ValueError:
+            graph = ''
         return graph
 
     def small_chart_url(self):
-        # copied logic, I don't care for it.
-        url, graph = get_graph(self.data, _cht[self.chart_type], 180, 144, 2)
+         try:
+            url, graph = get_graph(self.data, _cht[self.chart_type], 180, 144, 2)
+        except ValueError:
+            url = ''
         return url
 
     def incrementCounter(self, update_interval=10):
