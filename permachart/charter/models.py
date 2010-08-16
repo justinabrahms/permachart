@@ -37,9 +37,9 @@ class Chart(db.Model):
     def small_chart_url(self):
          try:
             url, graph = get_graph(self.data, _cht[self.chart_type], 180, 144, 2)
-        except ValueError:
+         except ValueError:
             url = ''
-        return url
+         return url
 
     def incrementCounter(self, update_interval=10):
       """
