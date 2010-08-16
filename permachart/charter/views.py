@@ -1,3 +1,5 @@
+from automatic_starter.decorators import login_required
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render_to_response
@@ -8,7 +10,7 @@ from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm, DataSetForm, DataRowForm, DataRowFormSet
 from charter.utils import _cht, get_graph, pretty_decode
 from urllib import urlencode, quote
-from urlparse import urlparse, urlunparse, parse_qs
+from urlparse import urlparse, urlunparse
 from django.utils import simplejson as json
 
 def get_object_or_404(cls, **kwargs):
@@ -21,18 +23,24 @@ def signin(request):
     # likely handled by appengine, but might require a callback?
     pass
 
+@login_required
 def manual_data_import(request):
     if request.method == "POST":
         cf = ChartForm(request.POST)
         if cf.is_valid():
             chart = cf.save()
+            chart.user = request.g_app_user
+            chart.save()
         return HttpResponseRedirect(reverse('chart-data-edit', args=(chart.get_hash(),)))
     else:
         cf = ChartForm()
     return render_to_response('charter/data_input.html', {'f':cf})
 
+@login_required
 def data_edit(request, hash):
     chart = Chart.get_by_id(pretty_decode(hash))
+    if chart.user != request.g_app_user:
+        return HttpResponse('nacho chart')
     if request.method == "POST":
         old_dataset = chart.data or None
         if chart.data:
@@ -111,10 +119,6 @@ def oembed(request):
         version = chart.data
         perma = reverse('chart-detail', args=(pretty_decode(keys[1]),))
     graph_url, graph = get_graph(version, _cht[chart.chart_type], 600, 480)
-    graph_parts = urlparse(graph_url)
-    graph_qs = parse_qs(graph_parts.query)
-    new_qs = '&'.join([k+'='+quote(str(v)) for (k,v) in graph_qs.items()])
-    graph_url = urlunparse((graph_parts.scheme, graph_parts.netloc, graph_parts.path, graph_parts.params, new_qs, graph_parts.fragment))
     oembed = {
         "version": str(version.version),
         "type": "photo",
