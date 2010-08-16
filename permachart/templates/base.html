@@ -14,10 +14,8 @@
         <li><a href="/">Home</a></li>
         <li><a href="{% url chart-new %}">Create New Chart</a></li>
         <li><a href="{% url chart-list %}">All Charts</a></li>
-        {% if anonymous %}
-        <li><a href="/login">Login</a></li>
-        {% else %}
-        <li><a href="/logout">Logout</a></li>
+        {% if user %}
+        <li><a href="{% url my-charts %}">My Charts</a></li>
         {% endif %}
       </ul>
     </div>
