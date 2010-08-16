@@ -4,9 +4,10 @@ from charter import views as charter_views
 
 urlpatterns = patterns(
     '',
-    url('^$', direct_to_template, {'template': 'home.html'}, name="home"),
+    url('^$', charter_views.home, name="home"),
     url('^new/$', charter_views.manual_data_import, name="chart-new"),
     url('^list/$', charter_views.chart_list, name="chart-list"),
+    url('^mine/$', charter_views.my_chart_list, name="my-charts"),
     url('^tmp-data/$', charter_views.pop_data),
     url('^oembed/$', charter_views.oembed, name='oembed'),
     url('^chart/([-\w]+)/$', charter_views.chart_resource, name="chart-resource"),
