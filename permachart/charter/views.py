@@ -100,8 +100,10 @@ def chart_list(request):
     chart_list = Chart.all()
     return render_to_response('charter/list.html', {'chart_list':chart_list})
 
-def get_chart_resource(request):
-    pass
+def chart_resource(request, hash):
+    chart = Chart.get_by_id(pretty_decode(hash))
+    chart.incrementCounter()
+    return HttpResponseRedirect(chart.small_chart_url())
     
 def oembed(request):
     if not request.GET.get('url'):

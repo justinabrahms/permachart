@@ -8,7 +8,14 @@
 {% endif %}
 <img src="{{ graph_url }}" class="graph" />
 <p>
-  <a href="{% url chart-data-edit chart.get_hash %}">Edit data</a>
+  <a href="{% url chart-data-edit chart.get_hash %}">Edit data</a> |
+  Viewed {{ chart.counter }} times. 
+  {% if not version_specific %}
+  {# FIXME: shouldn't hardcode this #}
+  {# FIXME: Should make a version of this to work with versioned charts. #}
+  <br />
+  <input style="width: 400px" type="text" value="http://permachart.appengine.com{% url chart-resource chart.get_hash %}" />
+  {% endif %}
 </p>
 {% endblock %}
 
