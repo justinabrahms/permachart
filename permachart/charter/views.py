@@ -160,7 +160,7 @@ def oembed(request):
         "height": 480,
         "title": chart.name,
         "url": graph_url,
-        "author": chart.user.nickname(),
+        "author": chart.user.email(),
         "provider_name": "Permachart",
         "provier_url": "http://permachart.appengine.com"
     }
