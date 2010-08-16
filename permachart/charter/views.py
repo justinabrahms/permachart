@@ -144,6 +144,8 @@ def oembed(request):
         if len(keys[i]) and keys[i][-1] == '+': #stats
             keys[i] = keys[i][:-1]
     chart = Chart.get_by_id(pretty_decode(keys[1]))
+    chart.counter += 1
+    chart.put()
     if len(keys) > 3:
         version = ChartDataSet.get(keys[2])
         perma = reverse('chart-detail-version', args=(pretty_decocde(keys[1]), keys[2]))
