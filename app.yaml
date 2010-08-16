@@ -4,6 +4,8 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /robots.txt
+  static_files: permachart/static/robots.txt
 - url: /favicon.ico
   static_files: permachart/static/favicon.ico       
   upload: permachart/static/favicon.ico
