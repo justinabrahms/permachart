@@ -160,7 +160,7 @@ def oembed(request):
         "height": 480,
         "title": chart.name,
         "url": graph_url,
-        "author": chart.user.nickname(),
+        "author": chart.user.email(),
         "provider_name": "Permachart",
         "provier_url": "http://permachart.appengine.com"
     }
@@ -182,4 +182,4 @@ def pop_data(request):
     cds2.put()
     c = Chart(name='%s' % time.time(), chart_type=chart_types[random.randint(0,2)], data=cds2, user=request.g_app_user)
     c.put()
-    return HttpResponseRedirect(reverse('chart-detail',c.key()))
+    return HttpResponseRedirect(reverse('chart-detail',args=(c.get_hash(),)))
