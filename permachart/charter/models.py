@@ -36,13 +36,23 @@ class Chart(db.Model):
         try:
             return get_graph(data, _cht[self.chart_type], 180, 144, 2)
         except ValueError:
+            # no data
+            return ''
+        except:
+            # everything else
             return ''
 
     def small_chart_graph(self, data=None):
-        return self.small_chart(data=data)[1]
+        try:
+            return self.small_chart(data=data)[1]
+        except IndexError:
+            return ''
 
     def small_chart_url(self, data=None):
-        return self.small_chart(data=data)[0]
+        try:
+            return self.small_chart(data=data)[0]
+        except IndexError:
+            return ''
 
     @classmethod
     def get_by_hash(cls, hash):
