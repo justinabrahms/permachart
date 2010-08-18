@@ -10,7 +10,7 @@
   <h4>Three Recent Charts</h4>
   <ul class="chart_list clearfix">
     {% for chart in chart_list %}
-    <li><a href="{% url chart-detail chart.get_hash %}"><img src="{{ chart.small_chart.get_url }}"/></a><br/><a href="{% url chart-detail chart.get_hash %}">{{ chart }}</a></li>
+    <li><a href="{% url chart-detail chart.get_hash %}"><img src="{{ chart.small_chart_url }}"/></a><br/><a href="{% url chart-detail chart.get_hash %}">{{ chart }}</a></li>
     {% endfor %}
   </ul>
 </p>
