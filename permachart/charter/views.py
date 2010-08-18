@@ -1,23 +1,17 @@
-from automatic_starter.decorators import login_required, user_in_request
+from urllib import urlencode, quote
+from urlparse import urlparse, urlunparse
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render_to_response
+from django.utils import simplejson as json
 from google.appengine.ext import db
 from google.appengine.api import users
 
+from automatic_starter.decorators import login_required, user_in_request
 from charter.models import Chart, ChartDataSet, DataRow
 from charter.forms import ChartForm, DataSetForm, DataRowForm, DataRowFormSet
 from charter.utils import _cht, get_graph, pretty_decode
-from urllib import urlencode, quote
-from urlparse import urlparse, urlunparse
-from django.utils import simplejson as json
-
-def get_object_or_404(cls, **kwargs):
-    try:
-        obj = cls.get(**kwargs)
-    except:
-        raise Http404
 
 @login_required
 def manual_data_import(request):
@@ -58,6 +52,7 @@ def data_edit(request, hash):
                                data_rows = keys)
             cds.save()
             chart.data = cds
+            chart.has_data = True
             chart.save()
             return HttpResponseRedirect(reverse(
                 'chart-detail',
@@ -107,7 +102,7 @@ def chart_detail_version(request, hash, version_key):
 
 @user_in_request
 def chart_list(request):
-    chart_list = Chart.all()
+    chart_list = Chart.all().filter('has_data ==', True)
     return render_to_response('charter/list.html', {
         'chart_list':chart_list,
         'user': request.g_app_user,
@@ -124,7 +119,7 @@ def my_chart_list(request):
     
 @user_in_request
 def home(request):
-    chart_list = Chart.all()[:3]
+    chart_list = Chart.all().filter('has_data ==', True)[:3]
     return render_to_response('home.html', {
         'chart_list':chart_list,
         'user': request.g_app_user,

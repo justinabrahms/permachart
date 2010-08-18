@@ -8,7 +8,7 @@ from charter.form_utils import BaseFormSet
 class ChartForm(djangoforms.ModelForm):
     class Meta:
         model = Chart
-        exclude = ('data', 'user', 'hash','counter',)
+        exclude = ('data', 'user', 'hash','counter', 'has_data',)
 
 class DataSetForm(djangoforms.ModelForm):
     class Meta:

@@ -19,6 +19,7 @@ class Chart(db.Model):
     chart_type = db.StringProperty(required=True, choices=CHART_CHOICES)
     user = db.UserProperty()
     data = db.ReferenceProperty(ChartDataSet)
+    has_data = db.BooleanProperty(default=False)
     counter = db.IntegerProperty(default=0)
 
     def __unicode__(self):
