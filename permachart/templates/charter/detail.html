@@ -8,14 +8,22 @@
 {% endif %}
 <img src="{{ graph_url }}" class="graph" />
 <p>
+  Embedded chart link viewed {{ chart.counter }} times. <br />
   {% ifequal chart.user user %}<a href="{% url chart-data-edit chart.get_hash %}">Edit data</a>{% endifequal %}
-  Viewed {{ chart.counter }} times. 
-  {% if not version_specific %}
     {# FIXME: shouldn't hardcode this #}
-    {# FIXME: Should make a version of this to work with versioned charts. #}
+    {% comment %}
+  
+    Should be made to work with versioned charts. This will need to be a
+    templatetag so we can inspect the version that's currently being
+    shown.
+  
+    {% endcomment %}
     <br />
-    <input style="width: 400px" type="text" value="http://permachart.appspot.com{% url chart-resource chart.get_hash %}" />
-  {% endif %}
+    <label for="chart_url">Most Recent Chart:</label>
+    <input id="chart_url" 
+           style="width: 400px; margin-left: 15px; padding: 5px;" 
+           type="text" 
+           value="http://permachart.appspot.com{{ chart.get_recent_chart_url }}" />
 </p>
 {% endblock %}
 
