@@ -44,3 +44,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 "django.core.context_processors.media",
 )
 TEMPLATE_DIRS = os.path.join(PROJECT_ROOT, 'templates')
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
