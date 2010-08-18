@@ -30,11 +30,13 @@ class Chart(db.Model):
     def get_hash(self):
         return pretty_encode(self.key().id())
 
-
     def small_chart(self, data=None):
         if not data:
             data = self.data
-        return get_graph(data, _cht[self.chart_type], 180, 144, 2)
+        try:
+            return get_graph(data, _cht[self.chart_type], 180, 144, 2)
+        except ValueError:
+            return ''
 
     def small_chart_graph(self, data=None):
         return self.small_chart(data=data)[1]
