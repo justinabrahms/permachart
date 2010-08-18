@@ -1,7 +1,9 @@
 import hashlib
 from google.appengine.ext import db
 from google.appengine.api import memcache
-from charter.utils import _cht, get_graph, pretty_encode
+from django.core.urlresolvers import reverse
+
+from charter.utils import _cht, get_graph, pretty_encode, pretty_decode
 
 CHART_CHOICES = ('pie','bar','line',)
 
@@ -28,14 +30,38 @@ class Chart(db.Model):
     def get_hash(self):
         return pretty_encode(self.key().id())
 
-    def small_chart(self):
-        url, graph = get_graph(self.data, _cht[self.chart_type], 180, 144, 2)
-        return graph
 
-    def small_chart_url(self):
-        # copied logic, I don't care for it.
-        url, graph = get_graph(self.data, _cht[self.chart_type], 180, 144, 2)
-        return url
+    def small_chart(self, data=None):
+        if not data:
+            data = self.data
+        return get_graph(data, _cht[self.chart_type], 180, 144, 2)
+
+    def small_chart_graph(self, data=None):
+        return self.small_chart(data=data)[1]
+
+    def small_chart_url(self, data=None):
+        return self.small_chart(data=data)[0]
+
+    @classmethod
+    def get_by_hash(cls, hash):
+        return cls.get_by_id(pretty_decode(hash))
+
+    def get_absolute_url(self):
+        if self.data.version == 1:
+            return reverse('chart-detail', args=(self.get_hash(),))
+        else:
+            return reverse('chart-detail-version', args=(self.get_hash(), str(self.data.key())))
+
+    def get_chart_url(self, recent=False, data=None):
+        if not data:
+            data = self.data
+        if self.data.version == 1 or recent:
+            return reverse('chart-resource', args=(self.get_hash(),))
+        else:
+            return reverse('chart-resource-version', args=(self.get_hash(), str(data.key())))
+
+    def get_recent_chart_url(self):
+        return self.get_chart_url(recent=True)
 
     def incrementCounter(self, update_interval=10):
       """
