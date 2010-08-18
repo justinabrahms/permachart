@@ -125,10 +125,14 @@ def home(request):
         'user': request.g_app_user,
     })    
 
-def chart_resource(request, hash):
-    chart = Chart.get_by_id(pretty_decode(hash))
+def chart_resource_version(request, hash, version_key=None):
+    chart = Chart.get_by_hash(hash)
+    if not version_key:
+        version = chart.data
+    else:
+        version = ChartDataSet.get(version_key)
     chart.incrementCounter()
-    return HttpResponseRedirect(chart.small_chart_url())
+    return HttpResponseRedirect(chart.small_chart_url(data=version))
     
 def oembed(request):
     if not request.GET.get('url'):
