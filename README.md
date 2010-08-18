@@ -17,8 +17,12 @@ v0.2
 
 v0.3
 
-* API
+* post-dash stabilization (fewer bugs/errors)
 
 v0.4
+
+* API
+
+v0.5
 
 * Google Docs Spreadsheet integration
